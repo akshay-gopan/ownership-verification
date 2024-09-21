@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const {Web3} = require('web3');
 const contractABI = require('../build/contracts/OwnershipVerification.json'); 
-const contractAddress = "0xB900e1d5c90531Dd7b9144742b8Cb9De9e2f6d5F"; // Replace with your contract address
+const contractAddress = "0x9310CEd0A8E4B518706abedf9B902ca9E0158947"; // Replace with your contract address
 
 const app = express();
 app.use(bodyParser.json());
@@ -51,6 +51,24 @@ app.post('/verify', async (req, res) => {
         res.status(500).json({ success: false, message: 'Server error' });
     }
 });
+
+// Get User Assets Route
+app.post('/assets', async (req, res) => {
+  const { userId } = req.body;
+
+  if (!userId) {
+      return res.status(400).json({ success: false, message: 'Missing userId' });
+  }
+
+  try {
+      const assets = []; // Logic to retrieve assets based on userId
+      res.json({ success: true, assets });
+  } catch (error) {
+      console.error('Error fetching assets:', error);
+      res.status(500).json({ success: false, message: 'Server error' });
+  }
+});
+
 
 // Start the server
 const PORT = 3000;
