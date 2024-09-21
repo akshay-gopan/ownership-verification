@@ -1,5 +1,5 @@
 import React from 'react';
-import Web3ContextProvider from './Web3Context';
+import Web3ContextProvider from './Web3ContextProvider';
 import RegisterOwnership from './components/RegisterOwnership';
 import VerifyOwnership from './components/VerifyOwnership';
 
