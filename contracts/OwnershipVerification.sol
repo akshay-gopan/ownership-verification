@@ -19,8 +19,6 @@ contract OwnershipVerification {
         return ownershipHashes[_ownershipHash];
     }
 
-    // Get assets for the caller
-    function getAssets() public view returns (bytes32[] memory) {
-        return userAssets[msg.sender]; // Return assets for the user calling the function
-    }
+
+
 }

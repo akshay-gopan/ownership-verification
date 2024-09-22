@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const {Web3} = require('web3');
 const contractABI = require('../build/contracts/OwnershipVerification.json'); 
-const contractAddress = "0x9310CEd0A8E4B518706abedf9B902ca9E0158947"; // Replace with your contract address
+const contractAddress = "0x4f046F8C3A3eBc232764Ecc28057d9771eECb038"; // Replace with your contract address
 
 const app = express();
 app.use(bodyParser.json());
@@ -52,22 +52,65 @@ app.post('/verify', async (req, res) => {
     }
 });
 
+// In-memory storage for OTPs (for demonstration purposes)
+let otpStore = {};
+
+// Function to generate a random 6-digit OTP
+const generateOtp = () => {
+  return crypto.randomInt(100000, 999999).toString();
+};
+
+// Route to send OTP
+// app.post('/send-otp', (req, res) => {
+//   const { phone, aadhar } = req.body;
+
+//   // Validate phone number and Aadhar number
+//   if (phone.length === 10 && aadhar.length === 12) {
+//     const otp = generateOtp();
+    
+//     // Store OTP associated with the phone number
+//     otpStore[phone] = otp;
+    
+//     console.log(`Generated OTP for phone ${phone}: ${otp}`);  // For debugging
+
+//     // Simulate sending OTP (Here, you can integrate an SMS API to send the actual OTP)
+//     res.json({ message: 'OTP sent successfully', otp });  // Remove otp from response in production
+//   } else {
+//     res.status(400).json({ message: 'Invalid Aadhar or Phone Number' });
+//   }
+// });
+
+// Route to verify OTP
+// app.post('/verify-otp', (req, res) => {
+//   const { phone, otp } = req.body;
+
+//   // Check if the OTP is correct
+//   if (otpStore[phone] && otpStore[phone] === otp) {
+//     delete otpStore[phone];  // Clear OTP after successful verification
+//     res.json({ message: 'OTP verified successfully. You are logged in!' });
+//   } else {
+//     res.status(400).json({ message: 'Invalid OTP or phone number' });
+//   }
+// });
+
 // Get User Assets Route
-app.post('/assets', async (req, res) => {
-  const { userId } = req.body;
+// Get User Assets Route
+// app.post('/assets', async (req, res) => {
+//     const { userId } = req.body;
 
-  if (!userId) {
-      return res.status(400).json({ success: false, message: 'Missing userId' });
-  }
+//     if (!userId) {
+//         return res.status(400).json({ success: false, message: 'Missing userId' });
+//     }
 
-  try {
-      const assets = []; // Logic to retrieve assets based on userId
-      res.json({ success: true, assets });
-  } catch (error) {
-      console.error('Error fetching assets:', error);
-      res.status(500).json({ success: false, message: 'Server error' });
-  }
-});
+//     try {
+//         const ownershipHash = web3.utils.keccak256(userId); // Create the hash based on userId
+//         const assets = await contract.methods.getAssets(ownershipHash).call(); // Fetch assets using the ownership hash
+//         res.json({ success: true, assets });
+//     } catch (error) {
+//         console.error('Error fetching assets:', error);
+//         res.status(500).json({ success: false, message: 'Server error' });
+//     }
+// });
 
 
 // Start the server
