@@ -20,4 +20,7 @@ const VerifyOwnership = () => {
         } catch (error) {
             alert('Error: ' + error.message);
         }
-    };
+    }
+};
+
+export default VerifyOwnership;
